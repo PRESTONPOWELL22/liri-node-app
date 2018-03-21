@@ -26,6 +26,9 @@ switch(a) {
     case "twitter-this":
         twitter()
           break
+    case 'do-what-it-says':
+        spotify()     
+         break 
     default:
         console.log('enter twitter-this movie-this or spotify-this-song')
           break
@@ -97,15 +100,29 @@ function twitter(){
 }
 
 //This is a function that makes a request to SpotifyAPI__________________________________________________________________________________________________________________________________
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 function spotify(){
     var query = process.argv[3]
 
+    // this sets a default if no song name is entered
     if (query === undefined){
         query= 'The Sign'
     }
+    else if(query === undefined && a === 'do-what-it-says'){
+        fs.readFile('random.txt', 'utf8', function(error, data){
+            if(error){
+                console.log(error)
+            }
+        
+            var dArr = data.split(',')
+            query = (dArr[1])
+            
+        
+        })    
+    }
+    
 
     var spotify = new Spotify(keys.spotify)
  
@@ -135,4 +152,20 @@ function spotify(){
 }
 
 
+// This is a function that returns data from randomBytes.txt____________________________________________________________________________________________________________________________
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+// function doIt(){
+
+
+//     fs.readFile('random.txt', 'utf8', function(error, data){
+//         if(error){
+//             console.log(error)
+//         }
+    
+//         var dArr = data.split(',')
+//         console.log(dArr[1])
+//         return(dArr[1])
+    
+//     })    
+// }
