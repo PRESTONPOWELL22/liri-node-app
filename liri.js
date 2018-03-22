@@ -27,7 +27,7 @@ switch(a) {
         twitter()
           break
     case 'do-what-it-says':
-        spotify()     
+        doIt()     
          break 
     default:
         console.log('enter twitter-this movie-this or spotify-this-song')
@@ -46,19 +46,15 @@ function omdb(){
 
 
     request(OMDBreq, function (error, response, body) {
-    //   console.log('error:', error); // Print the error if one occurred
-    //   console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-    
-        
+         
         var arr = []
         var obj = JSON.parse(body);
-        
         
         arr.push({
             'Title: ' : obj.Title,
             'Year: ' : obj.Year,
             'IMDB Rating: ' : obj.imdbRating,
-            // 'Rotten Tomatoes Rating: ' : obj.Rating[1],
+            'Rotten Tomatoes Rating: ' : obj.Ratings,
             'Country: ' : obj.Country,
             'Language: ' : obj.Language,
             'Plot: ' : obj.Plot,
@@ -110,19 +106,7 @@ function spotify(){
     if (query === undefined){
         query= 'The Sign'
     }
-    else if(query === undefined && a === 'do-what-it-says'){
-        fs.readFile('random.txt', 'utf8', function(error, data){
-            if(error){
-                console.log(error)
-            }
-        
-            var dArr = data.split(',')
-            query = (dArr[1])
-            
-        
-        })    
-    }
-    
+
 
     var spotify = new Spotify(keys.spotify)
  
@@ -142,30 +126,55 @@ function spotify(){
             'album' : songs[0].album.name,
 
         })
-
-        function artistNames(artist){
-            return artist.name
-        }
         
         console.log(data)
     });
 }
 
 
-// This is a function that returns data from randomBytes.txt____________________________________________________________________________________________________________________________
-// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// this is a seperate spotify function for the query do-what-it-says_____________________________________________________________________________________________________________________
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-// function doIt(){
-
-
-//     fs.readFile('random.txt', 'utf8', function(error, data){
-//         if(error){
-//             console.log(error)
-//         }
+function doIt(){
     
-//         var dArr = data.split(',')
-//         console.log(dArr[1])
-//         return(dArr[1])
+
     
-//     })    
-// }
+        fs.readFile('random.txt', 'utf8', function(error, data){
+            if(error){
+                console.log(error)
+            }
+        
+            var dArr = data.split(',')
+            query = (dArr[1])
+            console.log(query)
+                         
+            var spotify = new Spotify(keys.spotify)
+            
+            spotify.search({ type: 'track', query: query }, function(err, data) {
+                if (err) {
+                    return console.log('Error occurred: ' + err);
+                }
+                
+                var songs = data.tracks.items
+                var data = []                
+                
+                data.push({
+                    'artist': songs[0].artists.map(artistNames),
+                    'song' : songs[0].name,
+                    'song-preview' : songs[0].preview_url,
+                    'album' : songs[0].album.name,
+                    
+                })
+                
+                console.log(data)
+            });
+        })
+}
+
+// this function is passed my spotify function's data object_____________________________________________________________________________________________________________________________
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function artistNames(artist){
+    return artist.name
+}
+
