@@ -42,7 +42,7 @@ function omdb(){
 
     var OMDBtitle = process.argv[3]
 
-    var OMDBreq ="http://www.omdbapi.com/?apikey=trilogy&t=" + OMDBtitle
+    var OMDBreq ="http://www.omdbapi.com/?apikey="+keys.omdb+"&t=" + OMDBtitle
 
 
     request(OMDBreq, function (error, response, body) {
@@ -54,7 +54,7 @@ function omdb(){
             'Title: ' : obj.Title,
             'Year: ' : obj.Year,
             'IMDB Rating: ' : obj.imdbRating,
-            'Rotten Tomatoes Rating: ' : obj.Ratings,
+            'Rotten Tomatoes Rating: ' : obj.Ratings[1].Value,
             'Country: ' : obj.Country,
             'Language: ' : obj.Language,
             'Plot: ' : obj.Plot,
