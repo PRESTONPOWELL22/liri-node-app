@@ -46,6 +46,9 @@ function omdb(){
 
 
     request(OMDBreq, function (error, response, body) {
+        if(error){
+            console.log(error)
+        }
          
         var arr = []
         var obj = JSON.parse(body);
@@ -84,12 +87,13 @@ function twitter(){
               
               posts.push({
                   'created at: ' : tweets[i].created_at,
-                  'Tweets: ' : tweets[i].text,
+                  'Tweet: ' : tweets[i].text,
               });
 
             }
             console.log(posts);
         }
+        else{console.log(error)}
         
       });
     console.log("you called twitter")
