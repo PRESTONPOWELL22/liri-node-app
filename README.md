@@ -1,5 +1,4 @@
-# liri-node-app
-## Liri is a CLI built with node.js made by me, *Preston Powell*
+# Liri is a CLI built with node.js made by me, *Preston Powell*
 
 Liri was a lot of fun to build. It was my first real experience with node.js and NPM and when I started building it I had a very minimal understanding and used the npm docs to learn how to build this. I got to learn about different packages and how to begin to write backend code. I used several node packages including: Spotify, Request, Twitter, Dotenv, and more, I also learned about using node's built-in filesystem package to create, read and update files. Liri demosnstrates my ability to use node, parse through data, understand NPM documentation, and create CLI's using process.argv.
 
